@@ -6,10 +6,13 @@
 package it.polito.tdp.PremierLeague;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.PremierLeague.model.Match;
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,12 +50,22 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-    	
+    	Match m = cmbMatch.getValue();
+    	if (m == null) {
+    		txtResult.setText("Selezionare un match!");
+    		return;
+    	}
+    	model.creaGrafo(m);
+    	txtResult.setText("Grafo creato\n");
+    	txtResult.appendText("# VERTICI : " + this.model.getNumeroVertici() + "\n");
+    	txtResult.appendText("# ARCHI : " + this.model.getNumeroArchi());
     }
 
     @FXML
     void doGiocatoreMigliore(ActionEvent event) {    	
-    	
+    	Player p = this.model.getGiocatoreMigliore();
+    	txtResult.setText("Giocatore migliore:\n");
+    	txtResult.appendText(p +", delta efficienza = " + this.model.getDeltaPlayer(p));
     }
     
     @FXML
@@ -68,10 +81,14 @@ public class FXMLController {
         assert cmbMatch != null : "fx:id=\"cmbMatch\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtN != null : "fx:id=\"txtN\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
-
+        
+       
     }
     
     public void setModel(Model model) {
     	this.model = model;
+    	List<Match> partite = this.model.getLista();
+    	Collections.sort(partite);
+    	cmbMatch.getItems().addAll(partite);
     }
 }

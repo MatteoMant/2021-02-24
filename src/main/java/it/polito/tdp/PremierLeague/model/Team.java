@@ -13,18 +13,19 @@ public class Team {
 	public Integer getTeamID() {
 		return teamID;
 	}
+	
 	public void setTeamID(Integer teamID) {
 		this.teamID = teamID;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	
-
 	@Override
 	public String toString() {
 		return name;
